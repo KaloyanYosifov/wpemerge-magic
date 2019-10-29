@@ -1,0 +1,12 @@
+{
+    "name": "kyosifov/wpemerge-magic",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kaloyan Yosifov",
+            "email": "kaloqn665@gmail.com"
+        }
+    ],
+    "require": {}
+}
