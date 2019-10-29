@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Controllers\Web;
+
+class {CONTROLLER_NAME}
+{
+    public function index()
+    {
+        return '';
+    }
+}
