@@ -8,5 +8,13 @@
             "email": "kaloqn665@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "WPEmergeMagic\\": "app/"
+        }
+    },
+    "bin": [
+        "magic"
+    ]
 }
