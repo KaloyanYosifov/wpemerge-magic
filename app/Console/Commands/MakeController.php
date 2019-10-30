@@ -5,13 +5,17 @@ namespace WPEmergeMagic\Console\Commands;
 use WPEmergeMagic\Parsers\StubParser;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Exception\RuntimeException;
 
 class MakeController extends Command
 {
     protected static $defaultName = 'make:controller';
+
+    protected $input = null;
 
     protected function configure()
     {
@@ -20,10 +24,16 @@ class MakeController extends Command
 
         // arguments
         $this->addArgument('name', InputArgument::REQUIRED, 'Name of the controller');
+
+        // options
+        $this->addOption('type', null, InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // assign input member to the interface we are recieving
+        $this->input = $input;
+
         $name = $input->getArgument('name');
         $controllerFullPath = $this->getControllerPath() . $name . '.php';
 
@@ -41,6 +51,20 @@ class MakeController extends Command
 
     protected function getControllerPath()
     {
-        return $_SERVER['PWD'] . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
+        $dirSep = DIRECTORY_SEPARATOR;
+
+        $controllerTypes = [
+            'web' => 'Web',
+            'admin' => 'Admin',
+            'ajax' => 'Ajax',
+        ];
+
+        $type = $this->input->getOption('type') ?: 'web';
+
+        if (!array_key_exists($type, $controllerTypes)) {
+            throw new RuntimeException('The "--type" option accepts three values (web, admin or ajax).');
+        }
+
+        return $_SERVER['PWD'] . $dirSep . 'app' . $dirSep . 'Controllers' . $dirSep . $controllerTypes[$type] . $dirSep;
     }
 }
