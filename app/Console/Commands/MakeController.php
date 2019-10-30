@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Console\Commands;
 
+use WPEmergeMagic\Parsers\StubParser;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,9 +24,19 @@ class MakeController extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $controllerFullPath = $this->getControllerPath() . $input->getArgument('name') . '.php';
+        $name = $input->getArgument('name');
+        $controllerFullPath = $this->getControllerPath() . $name . '.php';
 
-        (new Filesystem)->dumpFile($controllerFullPath, 'testing');
+        $stubArguments = [
+            'CONTROLLER_NAME' => $name,
+        ];
+
+        (new Filesystem)->dumpFile(
+            $controllerFullPath,
+            (new StubParser)->parseViaStub('Controller', $stubArguments)
+        );
+
+        $output->writeln("Create a controller named $name");
     }
 
     protected function getControllerPath()
