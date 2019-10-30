@@ -3,6 +3,7 @@
 namespace WPEmergeMagic\Console\Commands;
 
 use WPEmergeMagic\Parsers\StubParser;
+use WPEmergeMagic\Support\CreatePath;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -51,8 +52,6 @@ class MakeController extends Command
 
     protected function getControllerPath()
     {
-        $dirSep = DIRECTORY_SEPARATOR;
-
         $controllerTypes = [
             'web' => 'Web',
             'admin' => 'Admin',
@@ -65,6 +64,12 @@ class MakeController extends Command
             throw new RuntimeException('The "--type" option accepts three values (web, admin or ajax).');
         }
 
-        return $_SERVER['PWD'] . $dirSep . 'app' . $dirSep . 'Controllers' . $dirSep . $controllerTypes[$type] . $dirSep;
+        $paths = [
+            'app',
+            'Controllers',
+            $controllerTypes[$type],
+        ];
+
+        return (new CreatePath)->create($_SERVER['PWD'], $paths);
     }
 }

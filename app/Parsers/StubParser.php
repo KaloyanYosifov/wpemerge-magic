@@ -15,7 +15,7 @@ class StubParser
      * @param array $arguments
      * @return string
      */
-    public function parse($content, array $arguments)
+    public function parse($content, array $arguments = [])
     {
         if (!$content) {
             throw new \InvalidArgumentException('No content is passed!');
@@ -36,7 +36,7 @@ class StubParser
      * @param array $arguments
      * @return string
      */
-    public function parseViaStub(string $stubName, array $arguments)
+    public function parseViaStub(string $stubName, array $arguments = [])
     {
         $stubFile = ROOT_DIR . 'stubs' . DIRECTORY_SEPARATOR . $stubName . '.stub';
 
