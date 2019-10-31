@@ -70,6 +70,6 @@ class MakeController extends Command
             $controllerTypes[$type],
         ];
 
-        return (new CreatePath)->create($_SERVER['PWD'], $paths);
+        return (new CreatePath)->create(getcwd(), $paths);
     }
 }

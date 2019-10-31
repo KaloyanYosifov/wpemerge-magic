@@ -41,7 +41,7 @@ class Init extends Command
             ];
 
             $fileSystem->dumpFile(
-                (new CreatePath)->create($_SERVER['PWD'], $routePath, false),
+                (new CreatePath)->create(getcwd(), $routePath, false),
                 (new StubParser)->parseViaStub('route')
             );
         }
@@ -49,6 +49,6 @@ class Init extends Command
 
     protected function getExecutionDirectory()
     {
-        return $_SERVER['PWD'] . DIRECTORY_SEPARATOR;
+        return getcwd() . DIRECTORY_SEPARATOR;
     }
 }
