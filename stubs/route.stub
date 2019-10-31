@@ -1,5 +1,3 @@
 <?php
 
-Route::get()->url('/')->handle(function() {
-    return 'It works';
-});
+Route::get()->url('/')->handle('{CONTROLLER_NAME}@index');

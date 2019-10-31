@@ -2,17 +2,26 @@
 
 namespace WPEmergeMagic\Console\Commands;
 
-use WPEmergeMagic\Parsers\StubParser;
-use WPEmergeMagic\Support\CreatePath;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
+use WPEmergeMagic\Tasks\WPEmerge\CreateRouteTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use WPEmergeMagic\Tasks\WPEmerge\CreateControllersTask;
 
 class Init extends Command
 {
     protected static $defaultName = 'init';
+
+    /**
+     * List of tasks
+     *
+     * @var array
+     */
+    protected $tasks = [
+        CreateRouteTask::class,
+        CreateControllersTask::class,
+    ];
 
     protected function configure()
     {
@@ -25,30 +34,8 @@ class Init extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fileSystem = new Filesystem;
-
-        $routes = [
-            'web.php',
-            'admin.php',
-            'ajax.php',
-        ];
-
-        foreach ($routes as $route) {
-            $routePath = [
-                $input->getOption('dirName') ?: 'app',
-                'routes',
-                $route,
-            ];
-
-            $fileSystem->dumpFile(
-                (new CreatePath)->create(getcwd(), $routePath, false),
-                (new StubParser)->parseViaStub('route')
-            );
+        foreach ($this->tasks as $task) {
+            (new $task)->handle($input, $output, $this);
         }
-    }
-
-    protected function getExecutionDirectory()
-    {
-        return getcwd() . DIRECTORY_SEPARATOR;
     }
 }
