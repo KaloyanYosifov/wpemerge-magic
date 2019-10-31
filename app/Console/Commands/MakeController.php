@@ -47,7 +47,7 @@ class MakeController extends Command
             (new StubParser)->parseViaStub('Controller', $stubArguments)
         );
 
-        $output->writeln("Create a controller named $name");
+        $output->writeln("Created a controller named $name");
     }
 
     protected function getControllerPath()

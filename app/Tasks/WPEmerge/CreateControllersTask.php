@@ -11,11 +11,23 @@ class CreateControllersTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
-        $commandInstance = $command->getApplication()->find('make:controller');
-        $arguments = new ArrayInput([
-            'name' => 'HomeController',
-        ]);
+        $this->createControllers($command->getApplication()->find('make:controller'), $output);
+    }
 
-        $commandInstance->run($arguments, $output);
+    protected function createControllers(Command $command, OutputInterface $output)
+    {
+        $controllerNames = [
+            'HomeController',
+            'AdminController',
+            'AjaxController',
+        ];
+
+        foreach ($controllerNames as $controllerName) {
+            $arguments = new ArrayInput([
+                'name' => $controllerName,
+            ]);
+
+            $command->run($arguments, $output);
+        }
     }
 }
