@@ -13,6 +13,8 @@ class CreateRouteTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
+        $output->writeln('Creating routes...');
+
         $fileSystem = new Filesystem;
 
         $routes = [

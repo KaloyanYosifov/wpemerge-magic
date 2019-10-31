@@ -16,6 +16,8 @@ class CreateControllersTask
 
     protected function createControllers(Command $command, OutputInterface $output)
     {
+        $output->writeln('Creating controllers...');
+
         $controllerNames = [
             'HomeController',
             'AdminController',
