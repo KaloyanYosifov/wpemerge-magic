@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use WPEmergeMagic\Tasks\WPEmerge\CreateRouteTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use WPEmergeMagic\Tasks\WPEmerge\CreateBootstrapTask;
 use WPEmergeMagic\Tasks\WPEmerge\InstallWPEmergeTask;
 use WPEmergeMagic\Tasks\WPEmerge\CreateControllersTask;
 
@@ -22,6 +23,7 @@ class Init extends Command
     protected $tasks = [
         CreateRouteTask::class,
         CreateControllersTask::class,
+        CreateBootstrapTask::class,
         InstallWPEmergeTask::class,
     ];
 

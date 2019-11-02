@@ -1,0 +1,14 @@
+<?php 
+
+/**
+ * Bootstrap WP Emerge.
+ */
+add_action( 'after_setup_theme', function() {
+    WPEmerge::bootstrap( [
+        'routes' => [
+            'web' => __DIR__ . '/routes/web.php',
+            'admin' => __DIR__ . '/routes/admin.php',
+            'ajax' => __DIR__ . '/routes/ajax.php',
+        ],
+    ] );
+} );
