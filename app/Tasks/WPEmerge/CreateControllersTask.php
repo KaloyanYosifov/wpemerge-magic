@@ -19,14 +19,15 @@ class CreateControllersTask
         $output->writeln('Creating controllers...');
 
         $controllerNames = [
-            'HomeController',
-            'AdminController',
-            'AjaxController',
+            'web' => 'HomeController',
+            'admin' => 'AdminController',
+            'ajax' => 'AjaxController',
         ];
 
-        foreach ($controllerNames as $controllerName) {
+        foreach ($controllerNames as $controllerType => $controllerName) {
             $arguments = new ArrayInput([
                 'name' => $controllerName,
+                '--type' => $controllerType,
             ]);
 
             $command->run($arguments, $output);
