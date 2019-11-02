@@ -35,7 +35,7 @@ class InstallWPEmergeTask
     {
         $composerJsonFilePath = (new CreatePath)->create(getcwd(), [
             'composer.json',
-        ]);
+        ], false);
 
         if (!\file_exists($composerJsonFilePath)) {
             $composerInitProcess = new Process([
