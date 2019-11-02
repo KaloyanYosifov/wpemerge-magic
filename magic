@@ -1,6 +1,12 @@
 #!/usr/bin/env php
 <?php
 
+// if the file is not run in command
+// just exit
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
 $autoloaders = [
     dirname(__DIR__) . DIRECTORY_SEPARATOR . 'autoload.php',
     __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
