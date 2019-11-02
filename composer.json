@@ -1,5 +1,5 @@
 {
-    "name": "KaloyanYosifov/wpemerge-magic",
+    "name": "kyosifov/wpemerge-magic",
     "version": "0.0.1",
     "description": "CLI Tool for WPEmerge with flavor.",
     "type": "library",
