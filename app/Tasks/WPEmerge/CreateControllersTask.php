@@ -28,6 +28,7 @@ class CreateControllersTask
             $arguments = new ArrayInput([
                 'name' => $controllerName,
                 '--type' => $controllerType,
+                '--silent' => true,
             ]);
 
             $command->run($arguments, $output);

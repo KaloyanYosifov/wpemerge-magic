@@ -24,10 +24,11 @@ class MakeController extends Command
             ->setHelp('Creates a controller in your root path.');
 
         // arguments
-        $this->addArgument('name', InputArgument::REQUIRED, 'Name of the controller');
+        $this->addArgument('name', InputArgument::REQUIRED, 'Name of the controller.');
 
         // options
-        $this->addOption('type', null, InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax)');
+        $this->addOption('type', 't', InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax).')
+            ->addOption('silent', 's', InputOption::VALUE_NONE, 'Option if we should throw an error if controller already exists.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,6 +38,18 @@ class MakeController extends Command
 
         $name = $input->getArgument('name');
         $controllerFullPath = $this->getControllerPath() . $name . '.php';
+
+        if (file_exists($controllerFullPath)) {
+            // if we are on silent mode
+            // return early
+            if ($input->getOption('silent')) {
+                return;
+            }
+
+            throw new RuntimeException('Controller with name "' . $name . '" already exist');
+
+            return;
+        }
 
         $stubArguments = [
             'CONTROLLER_NAME' => $name,
