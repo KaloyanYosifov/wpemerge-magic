@@ -8,7 +8,7 @@ if (php_sapi_name() !== 'cli') {
 }
 
 $autoloaders = [
-    dirname(__DIR__) . DIRECTORY_SEPARATOR . 'autoload.php',
+    dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'autoload.php',
     __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
 ];
 
