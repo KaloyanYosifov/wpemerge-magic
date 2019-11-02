@@ -24,14 +24,19 @@ class CreateRouteTask
         ];
 
         foreach ($routes as $controllerName => $route) {
-            $routePath = [
-                $input->getOption('dirName') ?: 'app',
+            $routeFullPath = (new CreatePath)->create(getcwd(), [
+                $input->getOption('dir') ?: 'app',
                 'routes',
                 $route,
-            ];
+            ], false);
+
+            // if we already have a route named like that skip it
+            if (\file_exists($routeFullPath)) {
+                continue;
+            }
 
             $fileSystem->dumpFile(
-                (new CreatePath)->create(getcwd(), $routePath, false),
+                $routeFullPath,
                 (new StubParser)->parseViaStub('route', [
                     'CONTROLLER_NAME' => $controllerName,
                 ])

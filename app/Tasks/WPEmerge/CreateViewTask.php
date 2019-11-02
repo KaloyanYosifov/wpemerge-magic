@@ -13,14 +13,15 @@ class CreateViewTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
-        $this->createLayout($output);
-        $this->createView($output);
+        $dir = $input->getOption('dir') ?: 'app';
+        $this->createLayout($dir, $output);
+        $this->createView($dir, $output);
     }
 
-    public function createLayout(OutputInterface $output)
+    public function createLayout(string $baseDir, OutputInterface $output)
     {
         $layoutFile = (new CreatePath)->create(getcwd(), [
-            'app',
+            $baseDir,
             'views',
             'layouts',
             'default.php',
@@ -38,10 +39,10 @@ class CreateViewTask
         );
     }
 
-    public function createView(OutputInterface $output)
+    public function createView(string $baseDir, OutputInterface $output)
     {
         $homeViewFile = (new CreatePath)->create(getcwd(), [
-            'app',
+            $baseDir,
             'views',
             'home',
             'home.php',

@@ -15,7 +15,7 @@ class CreateBootstrapTask
     {
         $bootstrapFile = (new CreatePath)
             ->create(\getcwd(), [
-                'app',
+                $input->getOption('dir') ?: 'app',
                 'bootstrap.php',
             ], false);
 

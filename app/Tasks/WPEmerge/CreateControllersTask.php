@@ -11,11 +11,6 @@ class CreateControllersTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
-        $this->createControllers($command->getApplication()->find('make:controller'), $output);
-    }
-
-    protected function createControllers(Command $command, OutputInterface $output)
-    {
         $output->writeln('Creating controllers...');
 
         $controllerNames = [
@@ -23,15 +18,17 @@ class CreateControllersTask
             'admin' => 'AdminController',
             'ajax' => 'AjaxController',
         ];
+        $makeControllerCommand = $command->getApplication()->find('make:controller');
 
         foreach ($controllerNames as $controllerType => $controllerName) {
             $arguments = new ArrayInput([
                 'name' => $controllerName,
                 '--type' => $controllerType,
                 '--silent' => true,
+                '--dir' => $input->getOption('dir') ?: 'app',
             ]);
 
-            $command->run($arguments, $output);
+            $makeControllerCommand->run($arguments, $output);
         }
     }
 }

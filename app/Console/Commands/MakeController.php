@@ -28,7 +28,8 @@ class MakeController extends Command
 
         // options
         $this->addOption('type', 't', InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax).')
-            ->addOption('silent', 's', InputOption::VALUE_NONE, 'Option if we should throw an error if controller already exists.');
+            ->addOption('silent', 's', InputOption::VALUE_NONE, 'Option if we should throw an error if controller already exists.')
+            ->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -78,7 +79,7 @@ class MakeController extends Command
         }
 
         $paths = [
-            'app',
+            $this->input->getOption('dir') ?: 'app',
             'Controllers',
             $controllerType,
         ];
