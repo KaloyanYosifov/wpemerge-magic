@@ -6,6 +6,6 @@ class {CONTROLLER_NAME}
 {
     public function index()
     {
-        return '';
+        return \WPEmerge\view( 'home/home.php' );
     }
 }

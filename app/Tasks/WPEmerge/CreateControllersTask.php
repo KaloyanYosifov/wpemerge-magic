@@ -19,7 +19,7 @@ class CreateControllersTask
         $output->writeln('Creating controllers...');
 
         $controllerNames = [
-            'web' => 'HomeController',
+            'home' => 'HomeController',
             'admin' => 'AdminController',
             'ajax' => 'AjaxController',
         ];

@@ -6,8 +6,8 @@
 add_action( 'after_setup_theme', function() {
     $autoloadFile = __DIR__ . '/../vendor/autoload.php';
 
-    if (!is_readable($autoloadFile)) {
-        throw new \Exception('No autoload file found! Please do check you have run "composer install"!');
+    if ( ! is_readable( $autoloadFile ) ) {
+        throw new \Exception( 'No autoload file found! Please do check you have run "composer install"!' );
     }
 
     require_once $autoloadFile;

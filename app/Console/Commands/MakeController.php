@@ -51,13 +51,18 @@ class MakeController extends Command
             return;
         }
 
+        $type = $this->input->getOption('type') ?: 'web';
+        // check if we have a home type of a controller
+        // and use HomeController stub for it
+        $controllerType = $type === 'home' ? 'HomeController' : 'Controller';
         $stubArguments = [
             'CONTROLLER_NAME' => $name,
+            'CONTROLLER_TYPE' => $this->getControllerType($type),
         ];
 
         (new Filesystem)->dumpFile(
             $controllerFullPath,
-            (new StubParser)->parseViaStub('Controller', $stubArguments)
+            (new StubParser)->parseViaStub($controllerType, $stubArguments)
         );
 
         $output->writeln("Created a controller named $name");
@@ -65,24 +70,44 @@ class MakeController extends Command
 
     protected function getControllerPath()
     {
-        $controllerTypes = [
-            'web' => 'Web',
-            'admin' => 'Admin',
-            'ajax' => 'Ajax',
-        ];
-
         $type = $this->input->getOption('type') ?: 'web';
+        $controllerType = $this->getControllerType($type);
 
-        if (!array_key_exists($type, $controllerTypes)) {
+        if (!$controllerType) {
             throw new RuntimeException('The "--type" option accepts three values (web, admin or ajax).');
         }
 
         $paths = [
             'app',
             'Controllers',
-            $controllerTypes[$type],
+            $controllerType,
         ];
 
         return (new CreatePath)->create(getcwd(), $paths);
+    }
+
+    protected function getControllerTypes(): array
+    {
+        return [
+            'web' => 'Web',
+            'home' => 'Web',
+            'admin' => 'Admin',
+            'ajax' => 'Ajax',
+        ];
+    }
+
+    /**
+     * Get controller Type
+     *
+     * @param string $type
+     * @return string|boolean
+     */
+    protected function getControllerType(string $type)
+    {
+        if (!array_key_exists($type, $this->getControllerTypes())) {
+            return false;
+        }
+
+        return $this->getControllerTypes()[$type];
     }
 }
