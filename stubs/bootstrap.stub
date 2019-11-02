@@ -4,7 +4,7 @@
  * Bootstrap WP Emerge.
  */
 add_action( 'after_setup_theme', function() {
-    $autoloadFile = __DIR__ . '/../vendor/autoload.php';
+    $autoloadFile = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
     if ( ! is_readable( $autoloadFile ) ) {
         throw new \Exception( 'No autoload file found! Please do check you have run "composer install"!' );

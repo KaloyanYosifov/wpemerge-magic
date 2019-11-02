@@ -26,7 +26,7 @@ class Bootstrap
      */
     public function handle()
     {
-        define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+        define('ROOT_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR);
         define('APP_DIR', __DIR__);
 
         $this->register();
