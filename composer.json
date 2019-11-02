@@ -1,13 +1,21 @@
 {
     "name": "KaloyanYosifov/wpemerge-magic",
+    "version": "0.0.1",
+    "description": "CLI Tool for WPEmerge with flavor.",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://kyosifov.com",
     "authors": [
         {
             "name": "Kaloyan Yosifov",
             "email": "kaloqn665@gmail.com"
         }
     ],
+    "support": {
+        "source": "https://github.com/KaloyanYosifov/wpemerge-magic",
+        "issues": "https://github.com/KaloyanYosifov/wpemerge-magic/issues",
+        "email": "kaloqn665@gmail.com"
+    },
     "require": {
         "symfony/console": "^4.3",
         "symfony/finder": "^4.3",
