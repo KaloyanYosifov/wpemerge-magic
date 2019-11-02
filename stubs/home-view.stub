@@ -1,0 +1,8 @@
+<?php 
+/**
+ * App Layout: layouts/default.php
+ */
+
+?>
+
+<h1>WPEmerge is working!</h1>

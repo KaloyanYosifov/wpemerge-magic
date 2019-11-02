@@ -4,6 +4,7 @@ namespace WPEmergeMagic\Console\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
+use WPEmergeMagic\Tasks\WPEmerge\CreateViewTask;
 use WPEmergeMagic\Tasks\WPEmerge\CreateRouteTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,6 +25,7 @@ class Init extends Command
         CreateRouteTask::class,
         CreateControllersTask::class,
         CreateBootstrapTask::class,
+        CreateViewTask::class,
         InstallWPEmergeTask::class,
     ];
 

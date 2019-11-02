@@ -1,0 +1,6 @@
+<?php
+\WPEmerge\render( 'header' );
+
+\WPEmerge\layout_content();
+
+\WPEmerge\render( 'footer' );
