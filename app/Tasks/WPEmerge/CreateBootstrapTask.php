@@ -4,6 +4,7 @@ namespace WPEmergeMagic\Tasks\WPEmerge;
 
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
+use WPEmergeMagic\Constants\AppConstants;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +16,7 @@ class CreateBootstrapTask
     {
         $bootstrapFile = (new CreatePath)
             ->create(\getcwd(), [
-                $input->getOption('dir') ?: 'app',
+                $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY,
                 'bootstrap.php',
             ], false);
 

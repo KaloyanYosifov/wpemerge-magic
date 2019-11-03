@@ -3,6 +3,7 @@
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
 use WPEmergeMagic\Support\CreatePath;
+use WPEmergeMagic\Constants\AppConstants;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,9 +53,11 @@ class AddAutoloadTask
         $psr4Autoloads = $composerData['autoload']['psr-4'];
 
         foreach ($psr4Autoloads as $psr4AutoloadNamespace => $psr4AutoloadFolder) {
+            $regex = '~' . AppConstants::DEFAULT_APP_NAMESPACE . '\\\\~';
+
             // if the namespace App is defined
             // return true
-            if (preg_match('~App\\\\~', $psr4AutoloadNamespace)) {
+            if (preg_match($regex, $psr4AutoloadNamespace)) {
                 return true;
             }
         }
@@ -72,8 +75,9 @@ class AddAutoloadTask
             $composerData['autoload']['psr-4'] = [];
         }
 
-        $dir = $input->getOption('dir') ?: 'app';
-        $composerData['autoload']['psr-4']['App\\'] = $dir . '/';
+        $dir = $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY;
+        $namespace = AppConstants::DEFAULT_APP_NAMESPACE . '\\';
+        $composerData['autoload']['psr-4'][$namespace] = $dir . '/';
 
         return $composerData;
     }

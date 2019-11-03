@@ -29,7 +29,8 @@ class MakeController extends Command
         // options
         $this->addOption('type', 't', InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax).')
             ->addOption('silent', 's', InputOption::VALUE_NONE, 'Option if we should throw an error if controller already exists.')
-            ->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app)');
+            ->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app).')
+            ->addOption('namespace', 'ns', InputOption::VALUE_REQUIRED, 'Set the namespace the controller is going to use.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -57,6 +58,7 @@ class MakeController extends Command
         // and use HomeController stub for it
         $controllerType = $type === 'home' ? 'HomeController' : 'Controller';
         $stubArguments = [
+            'CONTROLLER_NAMESPACE' => $input->getOption('namespace') ?: 'App',
             'CONTROLLER_NAME' => $name,
             'CONTROLLER_TYPE' => $this->getControllerType($type),
         ];

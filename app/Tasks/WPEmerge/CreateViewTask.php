@@ -4,6 +4,7 @@ namespace WPEmergeMagic\Tasks\WPEmerge;
 
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
+use WPEmergeMagic\Constants\AppConstants;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +14,7 @@ class CreateViewTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
-        $dir = $input->getOption('dir') ?: 'app';
+        $dir = $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY;
         $this->createLayout($dir, $output);
         $this->createView($dir, $output);
     }

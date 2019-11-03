@@ -37,7 +37,9 @@ class Init extends Command
             ->setHelp('Initialize WPEmerge project.');
 
         // options
-        $this->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app)');
+        $this
+            ->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app)')
+            ->addOption('namespace', 'ns', InputOption::VALUE_REQUIRED, 'Set the namespace the app is going to use.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
