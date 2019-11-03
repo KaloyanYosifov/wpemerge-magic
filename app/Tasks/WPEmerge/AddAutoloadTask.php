@@ -26,7 +26,7 @@ class AddAutoloadTask
         // and convert it to array
         $composerData = json_decode(\file_get_contents($composerJsonFilePath), true);
 
-        if ($this->hasAppAutoloadBeenDefined($composerData)) {
+        if ($this->hasAppAutoloadBeenDefined($composerData, $input)) {
             return;
         }
 
@@ -40,7 +40,7 @@ class AddAutoloadTask
         );
     }
 
-    protected function hasAppAutoloadBeenDefined(array $composerData): bool
+    protected function hasAppAutoloadBeenDefined(array $composerData, InputInterface $input): bool
     {
         if (!\array_key_exists('autoload', $composerData)) {
             return false;
@@ -53,7 +53,7 @@ class AddAutoloadTask
         $psr4Autoloads = $composerData['autoload']['psr-4'];
 
         foreach ($psr4Autoloads as $psr4AutoloadNamespace => $psr4AutoloadFolder) {
-            $regex = '~' . AppConstants::DEFAULT_APP_NAMESPACE . '\\\\~';
+            $regex = '~' . ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\\\~';
 
             // if the namespace App is defined
             // return true
@@ -76,7 +76,7 @@ class AddAutoloadTask
         }
 
         $dir = $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY;
-        $namespace = AppConstants::DEFAULT_APP_NAMESPACE . '\\';
+        $namespace = ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\';
         $composerData['autoload']['psr-4'][$namespace] = $dir . '/';
 
         return $composerData;

@@ -30,7 +30,7 @@ class MakeController extends Command
         $this->addOption('type', 't', InputOption::VALUE_REQUIRED, 'Type of the controller (web, admin, ajax).')
             ->addOption('silent', 's', InputOption::VALUE_NONE, 'Option if we should throw an error if controller already exists.')
             ->addOption('dir', 'd', InputOption::VALUE_REQUIRED, 'Set the name of the first directory name (default is app).')
-            ->addOption('namespace', 'ns', InputOption::VALUE_REQUIRED, 'Set the namespace the controller is going to use.');
+            ->addOption('namespace', null, InputOption::VALUE_REQUIRED, 'Set the namespace the controller is going to use.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
