@@ -5,6 +5,7 @@ namespace WPEmergeMagic\Console\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use WPEmergeMagic\Tasks\WPEmerge\CreateViewTask;
+use WPEmergeMagic\Tasks\WPEmerge\AddAutoloadTask;
 use WPEmergeMagic\Tasks\WPEmerge\CreateRouteTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,6 +28,7 @@ class Init extends Command
         CreateBootstrapTask::class,
         CreateViewTask::class,
         InstallWPEmergeTask::class,
+        AddAutoloadTask::class,
     ];
 
     protected function configure()
