@@ -35,7 +35,7 @@ class MakeTest extends Command
         (new Filesystem())->dumpFile(
             $testsPath,
             (new StubParser)->parseViaStub('UnitTest', [
-                'TEST_NAME' => $input->getArgument('name'),
+                'TEST_NAME' => $this->getNameWithoutExtension($input->getArgument('name')),
                 'NAMESPACE' => $input->getOption('namespace') ?: '',
             ])
         );
@@ -48,15 +48,38 @@ class MakeTest extends Command
             'unit',
         ];
         $namespace = $input->getOption('namespace');
+        $name = $this->getNameWithExtension($input->getArgument('name'));
 
         if (!$namespace) {
-            return $path;
+            return array_merge($path, [$name]);
         }
+
+        $namespacePath = [];
 
         if (strpos($namespace, '\\') === false) {
-            return array_merge($path, [$namespace]);
+            $path[] = $namespace;
+        } else {
+            $path = array_merge($path, explode('\\', $namespace));
         }
 
-        return array_merge($path, explode('\\', $namespace));
+        return array_merge($path, [$name]);
+    }
+
+    protected function getNameWithExtension(string $name): string
+    {
+        if (!preg_match('~\.php$~', $name)) {
+            $name = $name . '.php';
+        }
+
+        return $name;
+    }
+
+    protected function getNameWithoutExtension(string $name): string
+    {
+        if (preg_match('~\.php$~', $name)) {
+            $name = explode('.', $name)[0];
+        }
+
+        return $name;
     }
 }
