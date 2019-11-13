@@ -1,5 +1,4 @@
-name: PHP Composer
-
+name: Test before pushing to branch
 on: [push]
 
 jobs:
@@ -16,11 +15,5 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
     
-    - name: GitHub Action for PHPUnit
-      uses: pxgamer/phpunit-action@v1.0.0
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+    - name: Check if all tests pass
+      run: composer run-script test
