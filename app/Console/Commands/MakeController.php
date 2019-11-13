@@ -63,7 +63,7 @@ class MakeController extends Command
             'CONTROLLER_TYPE' => $this->getControllerType($type),
         ];
 
-        (new Filesystem)->dumpFile(
+        (new Filesystem())->dumpFile(
             $controllerFullPath,
             (new StubParser)->parseViaStub($controllerType, $stubArguments)
         );

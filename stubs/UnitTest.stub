@@ -1,0 +1,11 @@
+<?php
+
+namespace Tests\Unit{NAMESPACE};
+
+use PHPUnit\Framework\TestCase;
+
+class {TEST_NAME} extends TestCase
+{
+    /** @test */
+    public function it_sad() {}
+}
