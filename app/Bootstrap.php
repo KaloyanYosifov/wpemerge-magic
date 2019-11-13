@@ -34,6 +34,19 @@ class Bootstrap
     }
 
     /**
+     * Handle all bootstrap logic
+     * required for the library to work on test mode
+     *
+     * @return void
+     */
+    public function handleForTests()
+    {
+        $this->console->activateTestMode();
+
+        $this->handle();
+    }
+
+    /**
      * All configuration required to be done
      * before executing
      *

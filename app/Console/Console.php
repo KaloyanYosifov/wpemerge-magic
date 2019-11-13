@@ -7,10 +7,12 @@ use Symfony\Component\Console\Application;
 
 class Console
 {
+    protected $testMode = false;
+
     /**
      * The application where all the commands will be stored
      *
-     * @var [Symfony\Component\Console\Application]
+     * @var Symfony\Component\Console\Application
      */
     protected $application = null;
 
@@ -26,7 +28,14 @@ class Console
 
     public function run()
     {
-        $this->application->run();
+        !$this->testMode && $this->application->run();
+    }
+
+    public function activateTestMode(): self
+    {
+        $this->testMode = true;
+
+        return $this;
     }
 
     protected function registerAllCommands()

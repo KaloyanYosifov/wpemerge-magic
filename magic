@@ -20,6 +20,6 @@ foreach ($autoloaders as $autoloader) {
 
 }
 
-(new \WPEmergeMagic\Bootstrap)->handle();
+(new \WPEmergeMagic\Bootstrap())->handle();
 
 exit;
