@@ -10,7 +10,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CommandTestCase extends TestCase
 {
-    protected function tryToTestACommand(string $commandName, array $arguments = []): string
+    protected function runCommand(string $commandName, array $arguments = []): string
     {
         $command = Console::getApplication()->find($commandName);
         $commandTester = new CommandTester($command);

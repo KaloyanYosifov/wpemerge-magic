@@ -7,33 +7,25 @@ use Tests\CommandTestCase;
 class MakeControllerCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_creates_a_controller()
+    public function it_can_create_three_types_of_controllers()
     {
-        $this->tryToTestACommand('make:controller', [
-            'name' => 'TestController',
-        ]);
-
-        $this->assertAppFileExists([
-            'app',
-            'Controllers',
-            'Web',
-            'TestController.php',
-        ]);
+        $this->testCreatingAController('TestController');
+        $this->testCreatingAController('TestController', 'admin');
+        $this->testCreatingAController('TestController', 'ajax');
     }
 
-    /** @test */
-    public function it_creates_an_admin_controller()
+    protected function testCreatingAController(string $name, string $type = 'web')
     {
-        $this->tryToTestACommand('make:controller', [
-            'name' => 'TestController',
-            '--type' => 'admin',
+        $this->runCommand('make:controller', [
+            'name' => $name,
+            '--type' => $type,
         ]);
 
         $this->assertAppFileExists([
             'app',
             'Controllers',
-            'Admin',
-            'TestController.php',
+            ucfirst($type),
+            $name . '.php',
         ]);
     }
 }
