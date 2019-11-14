@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
 use WPEmergeMagic\Constants\AppConstants;
@@ -25,7 +26,7 @@ class CreateRouteTask
         ];
 
         foreach ($routes as $controllerName => $route) {
-            $routeFullPath = (new CreatePath)->create(getcwd(), [
+            $routeFullPath = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
                 $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY,
                 'routes',
                 $route,

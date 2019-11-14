@@ -9,6 +9,8 @@ class MakeControllerCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_a_controller()
     {
-        $this->assertEquals('test', 'test');
+        $this->tryToTestACommand('make:controller', [
+            'name' => 'TestController',
+        ]);
     }
 }

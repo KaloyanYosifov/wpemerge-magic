@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Support\CreatePath;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;
@@ -33,7 +34,7 @@ class InstallWPEmergeTask
 
     public function checkIfWeHaveComposerFile()
     {
-        $composerJsonFilePath = (new CreatePath)->create(getcwd(), [
+        $composerJsonFilePath = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
             'composer.json',
         ], false);
 

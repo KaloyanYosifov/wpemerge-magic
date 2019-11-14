@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
 use WPEmergeMagic\Constants\AppConstants;
@@ -21,7 +22,7 @@ class CreateViewTask
 
     public function createLayout(string $baseDir, OutputInterface $output)
     {
-        $layoutFile = (new CreatePath)->create(getcwd(), [
+        $layoutFile = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
             $baseDir,
             'views',
             'layouts',
@@ -42,7 +43,7 @@ class CreateViewTask
 
     public function createView(string $baseDir, OutputInterface $output)
     {
-        $homeViewFile = (new CreatePath)->create(getcwd(), [
+        $homeViewFile = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
             $baseDir,
             'views',
             'home',

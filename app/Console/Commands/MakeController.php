@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Console\Commands;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
 use Symfony\Component\Filesystem\Filesystem;
@@ -86,7 +87,7 @@ class MakeController extends Command
             $controllerType,
         ];
 
-        return (new CreatePath)->create(getcwd(), $paths);
+        return (new CreatePath)->create(Path::getCurrentWorkingDirectory(), $paths);
     }
 
     protected function getControllerTypes(): array

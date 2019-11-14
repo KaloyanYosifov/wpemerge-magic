@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
 use WPEmergeMagic\Constants\AppConstants;
@@ -15,7 +16,7 @@ class CreateBootstrapTask
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
         $bootstrapFile = (new CreatePath)
-            ->create(\getcwd(), [
+            ->create(Path::getCurrentWorkingDirectory(), [
                 $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY,
                 'bootstrap.php',
             ], false);

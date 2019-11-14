@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Support\CreatePath;
 use WPEmergeMagic\Constants\AppConstants;
 use Symfony\Component\Console\Command\Command;
@@ -13,7 +14,7 @@ class AddAutoloadTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
-        $composerJsonFilePath = (new CreatePath)->create(getcwd(), [
+        $composerJsonFilePath = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
             'composer.json',
         ], false);
 

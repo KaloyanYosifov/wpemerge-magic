@@ -2,6 +2,7 @@
 
 namespace WPEmergeMagic\Console\Commands;
 
+use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Parsers\StubParser;
 use WPEmergeMagic\Support\CreatePath;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,7 +31,7 @@ class MakeTest extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $testsPath = (new CreatePath())
-            ->create(getcwd(), $this->getPathToTests($input, $output), false);
+            ->create(Path::getCurrentWorkingDirectory(), $this->getPathToTests($input, $output), false);
 
         (new Filesystem())->dumpFile(
             $testsPath,
