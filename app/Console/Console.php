@@ -7,6 +7,10 @@ use Symfony\Component\Console\Application;
 
 class Console
 {
+    // static
+    protected static $instance = null;
+
+    // properties
     protected $testMode = false;
 
     /**
@@ -16,22 +20,22 @@ class Console
      */
     protected $application = null;
 
-    public function __construct()
+    protected function __construct()
     {
         $this->application = new Application();
     }
 
-    public function register()
+    protected function register()
     {
         $this->registerAllCommands();
     }
 
-    public function run()
+    protected function run()
     {
         !$this->testMode && $this->application->run();
     }
 
-    public function activateTestMode(): self
+    protected function activateTestMode(): self
     {
         $this->testMode = true;
 
@@ -56,5 +60,20 @@ class Console
 
             $this->application->add(new $commandClass);
         }
+    }
+
+    protected function getApplication(): Application
+    {
+        return $this->application;
+    }
+
+    /** static */
+    public static function __callStatic($method, $arguments)
+    {
+        if (!static::$instance) {
+            static::$instance = new static();
+        }
+
+        return call_user_func_array([static::$instance, $method], $arguments);
     }
 }

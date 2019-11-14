@@ -6,17 +6,7 @@ use WPEmergeMagic\Console\Console;
 
 class Bootstrap
 {
-    /**
-     * Console class
-     *
-     * @var [WPEmergeMagic\Console\Console]
-     */
-    protected $console = null;
-
-    public function __construct()
-    {
-        $this->console = new Console;
-    }
+    public function __construct() {}
 
     /**
      * Handle all bootstrap logic
@@ -41,7 +31,7 @@ class Bootstrap
      */
     public function handleForTests()
     {
-        $this->console->activateTestMode();
+        Console::activateTestMode();
 
         $this->handle();
     }
@@ -54,7 +44,7 @@ class Bootstrap
      */
     protected function register()
     {
-        $this->console->register();
+        Console::register();
     }
 
     /**
@@ -64,6 +54,6 @@ class Bootstrap
      */
     protected function run()
     {
-        $this->console->run();
+        Console::run();
     }
 }
