@@ -2,9 +2,11 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\App;
 use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Support\CreatePath;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use WPEmergeMagic\Exceptions\TaskFailedException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,6 +19,10 @@ class InstallWPEmergeTask
         $output->writeln('Installing WPEmerge...');
 
         $this->checkIfWeHaveComposerFile();
+
+        if (App::isOnTestMode()) {
+            return;
+        }
 
         $installWPEmergeProcess = new Process([
             'composer',
@@ -38,6 +44,12 @@ class InstallWPEmergeTask
             'composer.json',
         ], false);
 
+        if (App::isOnTestMode()) {
+            (new Filesystem())->dumpFile($composerJsonFilePath, $this->getTestComposerData());
+
+            return;
+        }
+
         if (!\file_exists($composerJsonFilePath)) {
             $composerInitProcess = new Process([
                 'composer',
@@ -51,5 +63,28 @@ class InstallWPEmergeTask
                 throw new TaskFailedException('Couldn\'t init Composer!');
             }
         }
+    }
+
+    protected function getTestComposerData(): string
+    {
+        $composerData = [
+            'name' => 'test/wpemerge-magic-tests',
+            'version' => '0.0.1',
+            'description' => 'Tests.',
+            'type' => 'library',
+            'license' => 'MIT',
+            'homepage' => 'https://test.com',
+            'authors' => [
+                [
+                    'name' => 'Test Testov',
+                    'email' => 'test@example.com',
+                ],
+            ],
+            'require' => [
+                'htmlburger/wpemerge' => 'dev',
+            ],
+        ];
+
+        return json_encode($composerData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }

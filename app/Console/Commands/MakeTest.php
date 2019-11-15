@@ -22,10 +22,10 @@ class MakeTest extends Command
             ->setHelp('Creates a unit test in your tests folder.');
 
         // arguments
-        $this->addArgument('name', InputArgument::REQUIRED, 'Name of the controller.');
+        $this->addArgument('name', InputArgument::REQUIRED, 'Name of the test.');
 
         // options
-        $this->addOption('namespace', null, InputOption::VALUE_REQUIRED, 'Define namespace for the controller.');
+        $this->addOption('namespace', null, InputOption::VALUE_REQUIRED, 'Define namespace for the test.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
