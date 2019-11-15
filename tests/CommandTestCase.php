@@ -24,7 +24,13 @@ class CommandTestCase extends TestCase
 
     protected function assertTestFileExists(array $path)
     {
-        $this->assertTrue(file_exists($this->getTestFilePath($path)));
+        if (!file_exists($fullPath = $this->getTestFilePath($path))) {
+            $this->fail("File with path \"$fullPath\" doesn't exist!");
+
+            return;
+        }
+
+        $this->assertTrue(true);
     }
 
     protected function getTestFilePath(array $path)
