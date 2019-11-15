@@ -22,16 +22,19 @@ class CommandTestCase extends TestCase
         return $commandTester->getDisplay();
     }
 
-    protected function assertAppFileExists(array $path)
+    protected function assertTestFileExists(array $path)
     {
-        $createdPath = (new CreatePath())
+        $this->assertTrue(file_exists($this->getTestFilePath($path)));
+    }
+
+    protected function getTestFilePath(array $path)
+    {
+        return (new CreatePath())
             ->create(
                 ROOT_TEST_DIR,
                 array_merge(['test-files'], $path),
                 false
             );
-
-        $this->assertTrue(file_exists($createdPath));
     }
 
     protected function tearDown(): void
