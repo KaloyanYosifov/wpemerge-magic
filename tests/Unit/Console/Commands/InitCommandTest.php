@@ -11,9 +11,7 @@ class InitCommandTest extends CommandTestCase
     {
         $this->runCommand('init');
 
-        $this->assertTrue(
-            file_exists($this->getTestFilePath(['app']))
-        );
+        $this->assertTestFileExists(['app']);
     }
 
     /** @test */
@@ -26,7 +24,7 @@ class InitCommandTest extends CommandTestCase
             'routes',
         ];
 
-        $this->assertTrue(file_exists($this->getTestFilePath($routesPath)));
+        $this->assertTestFileExists($routesPath);
         $this->assertTestFileExists(array_merge($routesPath, ['web.php']));
         $this->assertTestFileExists(array_merge($routesPath, ['admin.php']));
         $this->assertTestFileExists(array_merge($routesPath, ['ajax.php']));
@@ -42,7 +40,7 @@ class InitCommandTest extends CommandTestCase
             'Controllers',
         ];
 
-        $this->assertTrue(file_exists($this->getTestFilePath($controllersPath)));
+        $this->assertTestFileExists($controllersPath);
         $this->assertTestFileExists(array_merge($controllersPath, ['Web', 'HomeController.php']));
         $this->assertTestFileExists(array_merge($controllersPath, ['Admin', 'AdminController.php']));
         $this->assertTestFileExists(array_merge($controllersPath, ['Ajax', 'AjaxController.php']));
@@ -58,7 +56,7 @@ class InitCommandTest extends CommandTestCase
             'views',
         ];
 
-        $this->assertTrue(file_exists($this->getTestFilePath($viewsPath)));
+        $this->assertTestFileExists($viewsPath);
         $this->assertTestFileExists(array_merge($viewsPath, ['layouts', 'default.php']));
         $this->assertTestFileExists(array_merge($viewsPath, ['home', 'home.php']));
     }
