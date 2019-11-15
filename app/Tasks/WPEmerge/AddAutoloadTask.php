@@ -77,7 +77,7 @@ class AddAutoloadTask
         }
 
         $dir = $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY;
-        $namespace = ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\';
+        $namespace = ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\\\';
         $composerData['autoload']['psr-4'][$namespace] = $dir . '/';
 
         return $composerData;
