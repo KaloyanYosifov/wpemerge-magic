@@ -52,6 +52,30 @@ class MakeControllerCommandTest extends CommandTestCase
         $this->assertTrue(!!preg_match('~RandomNamespaceFound~', $contentsOfController));
     }
 
+    /** @test */
+    public function it_can_create_controller_with_all_the_options()
+    {
+        $this->runCommand('make:controller', [
+            'name' => 'TestController',
+            '--type' => 'admin',
+            '--dir' => 'new-test-app',
+            '--namespace' => 'RandomNamespaceFound',
+        ]);
+
+        $pathToController = [
+            'new-test-app',
+            'Controllers',
+            'Admin',
+            'TestController.php',
+        ];
+
+        $this->assertTestFileExists($pathToController);
+
+        $contentsOfController = file_get_contents($this->getTestFilePath($pathToController));
+
+        $this->assertTrue(!!preg_match('~RandomNamespaceFound~', $contentsOfController));
+    }
+
     protected function assertControllerIsCreated(string $name, string $type = 'web')
     {
         $this->runCommand('make:controller', [
