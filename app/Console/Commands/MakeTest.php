@@ -37,7 +37,7 @@ class MakeTest extends Command
             $testsPath,
             (new StubParser)->parseViaStub('UnitTest', [
                 'TEST_NAME' => $this->getNameWithoutExtension($input->getArgument('name')),
-                'NAMESPACE' => $this->convertNamespace($input->getOption('namespace')) ?: '',
+                'NAMESPACE' => $this->convertNamespace($input->getOption('namespace')),
             ])
         );
     }
@@ -84,10 +84,10 @@ class MakeTest extends Command
         return $name;
     }
 
-    protected function convertNamespace(string $namespace): string
+    protected function convertNamespace(?string $namespace): string
     {
         if (!$namespace) {
-            return $namespace;
+            return '';
         }
 
         return '\\' . str_replace('/', '\\', $namespace);
