@@ -46,7 +46,7 @@ class MakeTest extends Command
     {
         $path = [
             'tests',
-            'unit',
+            'Unit',
         ];
         $namespace = $input->getOption('namespace');
         $name = $this->getNameWithExtension($input->getArgument('name'));
