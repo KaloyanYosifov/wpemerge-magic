@@ -43,6 +43,11 @@ class CommandTestCase extends TestCase
             );
     }
 
+    public function getTestFilePathContents(array $path): string
+    {
+        return file_get_contents($this->getTestFilePath($path));
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();

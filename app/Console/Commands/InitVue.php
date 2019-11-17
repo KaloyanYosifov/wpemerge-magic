@@ -3,12 +3,13 @@
 namespace WPEmergeMagic\Console\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use WPEmergeMagic\Tasks\Vue\InstallVuePackageTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Init extends Command
+class InitVue extends Command
 {
-    protected static $defaultName = 'init';
+    protected static $defaultName = 'init-vue';
 
     /**
      * List of tasks
@@ -16,7 +17,7 @@ class Init extends Command
      * @var array
      */
     protected $tasks = [
-
+        InstallVuePackageTask::class,
     ];
 
     protected function configure()
