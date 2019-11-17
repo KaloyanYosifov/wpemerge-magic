@@ -1,0 +1,26 @@
+const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+module.exports = {
+    entry: path.resolve(__dirname, '../', 'resources', 'js', 'index.js'),
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                use: 'vue-loader'
+            },
+        ]
+    },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.runtime.esm.js'
+        },
+        plugins: [
+            new VueLoaderPlugin()
+        ]
+    },
+    output: {
+        path: path.resolve(__dirname, '../', 'dist'),
+        filename: 'bundle.js'
+    }
+}
