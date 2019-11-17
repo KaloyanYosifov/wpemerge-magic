@@ -121,7 +121,7 @@ class InstallVuePackageTask
 
     public function checkIfWeHavePackageFile()
     {
-        $doesPackageJsonFileExist = !file_exists($this->getPackageJsonFilePath());
+        $doesPackageJsonFileExist = file_exists($this->getPackageJsonFilePath());
 
         if (App::isOnTestMode()) {
             !$doesPackageJsonFileExist && (new Filesystem())->dumpFile($this->getPackageJsonFilePath(), $this->getTestPackageJsonData());
@@ -129,7 +129,7 @@ class InstallVuePackageTask
             return;
         }
 
-        if ($doesPackageJsonFileExist) {
+        if (!$doesPackageJsonFileExist) {
             $npmInitProcess = new Process([
                 'npm',
                 'init',
