@@ -1,6 +1,6 @@
 <?php
 
-namespace WPEmergeMagic\Tasks\WPEmerge;
+namespace WPEmergeMagic\Tasks\Vue;
 
 use WPEmergeMagic\Support\App;
 use WPEmergeMagic\Support\Path;
@@ -12,7 +12,7 @@ use WPEmergeMagic\Exceptions\TaskFailedException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InstallWPEmergeTask
+class InstallVuePackageTask
 {
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
