@@ -21,7 +21,8 @@
         "symfony/finder": "^4.3",
         "symfony/filesystem": "^4.3",
         "symfony/process": "^4.3",
-        "htmlburger/wpemerge": "^0.15.0"
+        "htmlburger/wpemerge": "^0.15.0",
+        "mockery/mockery": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.4"
