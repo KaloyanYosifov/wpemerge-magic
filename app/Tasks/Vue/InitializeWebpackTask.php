@@ -83,6 +83,6 @@ class InitializeWebpackTask
 
     protected function stringStartsWith(string $string, string $startString): bool
     {
-        return substr($string, 0, strlen($startString) === $startString);
+        return substr($string, 0, strlen($startString)) === $startString;
     }
 }
