@@ -52,7 +52,6 @@ class TestCase extends PHPUnitTestCase
         return file_get_contents($this->getTestFilePath($path));
     }
 
-    /** @test */
     public function generateTestFilesPath()
     {
         (new Filesystem())
