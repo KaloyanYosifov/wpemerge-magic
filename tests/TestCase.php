@@ -52,6 +52,11 @@ class TestCase extends PHPUnitTestCase
         return file_get_contents($this->getTestFilePath($path));
     }
 
+    public function putContentsToTestFile(array $path, string $contents)
+    {
+        (new Filesystem())->dumpFile($this->getTestFilePath($path), $contents);
+    }
+
     public function generateTestFilesPath()
     {
         (new Filesystem())

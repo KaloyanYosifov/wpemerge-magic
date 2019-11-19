@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tasks\Vue;
 
 use Tests\TestCase;
+use WPEmergeMagic\Parsers\StubParser;
 use Symfony\Component\Console\Command\Command;
 use WPEmergeMagic\Tasks\Vue\InitializeWebpackTask;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,5 +34,27 @@ class InitializeWebpackTaskTest extends TestCase
     }
 
     /** @test */
-    public function it_adds_vue_loader_to_webpack() {}
+    public function it_adds_vue_loader_to_webpack()
+    {
+        $webpackFilePath = [
+            'config',
+            'webpack.config.js',
+        ];
+
+        // generate a webpack config js file prematurely
+        // so that the task doesn't create the default one
+        $this->putContentsToTestFile(
+            $webpackFilePath,
+            (new StubParser)->parseViaStub('webpack-not-full.mix.js')
+        );
+
+        $inputMock = $this->mock(InputInterface::class);
+        $outputMock = $this->mock(OutputInterface::class);
+        $commandMock = $this->mock(Command::class);
+
+        $outputMock->shouldReceive('writeln');
+
+        $initWebpackTask = new InitializeWebpackTask();
+        $initWebpackTask->handle($inputMock, $outputMock, $commandMock);
+    }
 }
