@@ -2,3 +2,4 @@
 /task-testing/
 composer.lock
 .phpunit.result.cache
+/tests/test-files
