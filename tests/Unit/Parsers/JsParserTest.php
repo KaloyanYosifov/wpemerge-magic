@@ -3,6 +3,7 @@
 namespace Tests\Unit\Parsers;
 
 use PHPUnit\Framework\TestCase;
+use WPEmergeMagic\Parsers\JsParser;
 
 class JsParserTest extends TestCase
 {
@@ -18,6 +19,6 @@ class JsParserTest extends TestCase
         }
         EOD;
 
-        $data = (new JsParser())->handle();
+        $data = (new JsParser())->parse($jsObject);
     }
 }
