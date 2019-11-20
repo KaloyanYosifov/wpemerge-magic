@@ -71,6 +71,8 @@ class InitializeWebpackTask
             if ($this->stringStartsWith($fileLine, 'module.exports') && !$startRecievingExportContent) {
                 $startRecievingExportContent = true;
                 $webpackExportsContent[] = explode('=', $fileLine)[1];
+
+                continue;
             }
 
             if ($startRecievingExportContent) {
@@ -79,6 +81,8 @@ class InitializeWebpackTask
                 $webpackContents[] = $fileLine;
             }
         }
+
+        $webpackExportJson = json_decode(implode('', $webpackExportsContent), true);
     }
 
     protected function stringStartsWith(string $string, string $startString): bool
