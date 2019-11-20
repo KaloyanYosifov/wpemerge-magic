@@ -50,14 +50,10 @@ class InitCommandTest extends CommandTestCase
     {
         $this->runCommand('init');
 
-        $viewsPath = [
-            'app',
-            'views',
-        ];
-
-        $this->assertTestFileExists($viewsPath);
-        $this->assertTestFileExists(array_merge($viewsPath, ['layouts', 'default.php']));
-        $this->assertTestFileExists(array_merge($viewsPath, ['home', 'home.php']));
+        $this->assertTestFileExists(['app', 'layouts']);
+        $this->assertTestFileExists(['app', 'views']);
+        $this->assertTestFileExists(['app', 'layouts', 'default.php']);
+        $this->assertTestFileExists(['app', 'views', 'home', 'home.php']);
     }
 
     /** @test */

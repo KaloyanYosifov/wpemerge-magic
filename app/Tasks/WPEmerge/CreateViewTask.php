@@ -24,7 +24,6 @@ class CreateViewTask
     {
         $layoutFile = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
             $baseDir,
-            'views',
             'layouts',
             'default.php',
         ], false);
