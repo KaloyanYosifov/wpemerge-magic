@@ -56,5 +56,8 @@ class InitializeWebpackTaskTest extends TestCase
 
         $initWebpackTask = new InitializeWebpackTask();
         $initWebpackTask->handle($inputMock, $outputMock, $commandMock);
+
+        // fake test
+        $this->assertTrue(true);
     }
 }
