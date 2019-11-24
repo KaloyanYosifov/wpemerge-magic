@@ -62,7 +62,7 @@ class InitializeWebpackTaskTest extends TestCase
         $this->assertRegExp('~test: \/\\\.vue\$\/,~', $contents);
         $this->assertRegExp('~loader: \'vue-loader\'~', $contents);
         $this->assertRegExp('~new VueLoaderPlugin\(\)~', $contents);
-        $this->assertRegExp('~\'vue$\': \'vue/dist/vue.runtime.esm.js\'~', $contents);
+        $this->assertRegExp('~\'vue\$\': \'vue\/dist\/vue\.runtime\.esm\.js\'~', $contents);
         $this->assertNotRegExp('~new VueLoaderPlugin\(\)\':~', $contents);
     }
 }
