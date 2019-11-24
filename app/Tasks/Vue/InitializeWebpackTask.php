@@ -17,13 +17,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InitializeWebpackTask
 {
     protected $webpackPath = '';
+    protected $initliazeVue = true;
 
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
         $output->writeln('Initializing webpack...');
 
         $this->checkIfWeHaveAWebpackJsFile();
-        $this->addVueLoader();
+
+        $this->initliazeVue && $this->addVueLoader();
     }
 
     protected function checkIfWeHaveAWebpackJsFile()
@@ -41,6 +43,8 @@ class InitializeWebpackTask
                     $this->webpackPath,
                     (new StubParser())->parseViaStub('webpack.mix.js')
                 );
+
+            $this->initliazeVue = false;
         }
     }
 

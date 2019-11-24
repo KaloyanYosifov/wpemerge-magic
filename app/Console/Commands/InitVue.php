@@ -3,6 +3,7 @@
 namespace WPEmergeMagic\Console\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use WPEmergeMagic\Tasks\Vue\InitializeWebpackTask;
 use WPEmergeMagic\Tasks\Vue\InstallVuePackageTask;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,6 +19,7 @@ class InitVue extends Command
      */
     protected $tasks = [
         InstallVuePackageTask::class,
+        InitializeWebpackTask::class,
     ];
 
     protected function configure()

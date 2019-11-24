@@ -45,6 +45,10 @@ class JsComposer
 
     protected function parseFunctionLine(string $line): string
     {
+        if (strpos($line, ':') === false) {
+            return preg_replace('~(\s+)(\'|")(.*)\)(\'|")(,?)~', '$1$3)$5', $line);
+        }
+
         $splittedLineByObject = explode(':', $line);
 
         $objectName = array_shift($splittedLineByObject) . ':';

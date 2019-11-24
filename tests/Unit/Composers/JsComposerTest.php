@@ -90,4 +90,32 @@ class JsComposerTest extends TestCase
 
         $this->assertEquals($jsComposer->compose($jsObject), $assertString);
     }
+
+    /** @test */
+    public function it_can_compose_from_classes()
+    {
+        $jsComposer = new JsComposer();
+        $jsObject = [
+            'welcome' => [
+                'testing' => 'path.rename(\'testing issue\', \'welcome to the hood\')',
+                'testing2' => 'path.rename(\'testing issue\', \'welcome to my hood\')',
+            ],
+            'welcome2' => [
+                'new Greet()',
+            ],
+        ];
+        $assertString = <<<EOD
+        {
+            welcome: {
+                testing: path.rename('testing issue', 'welcome to the hood'),
+                testing2: path.rename('testing issue', 'welcome to my hood'),
+            },
+            welcome2: [
+                new Greet()
+            ]
+        }
+        EOD;
+
+        $this->assertEquals($jsComposer->compose($jsObject), $assertString);
+    }
 }
