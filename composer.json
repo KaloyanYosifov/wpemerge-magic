@@ -1,6 +1,6 @@
 {
     "name": "kyosifov/wpemerge-magic",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "CLI Tool for WPEmerge with flavor.",
     "type": "library",
     "license": "MIT",
