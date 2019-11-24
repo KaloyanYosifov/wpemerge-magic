@@ -87,7 +87,7 @@ class JsParser
 
     protected function addDoubleQuotesToObjects(string $line): string
     {
-        $line = preg_replace('~(?<!:)(?<!,)(\s+)(.*?):~', '$1"$2":', $line);
+        $line = preg_replace('~(?<!:)(?<!,)(\s+)(["\w\$]*):~', '$1"$2":', $line);
 
         return $line;
     }
