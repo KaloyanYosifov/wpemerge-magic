@@ -7,7 +7,6 @@ class JsParser
     public function parse(string $jsObject)
     {
         $lines = explode(PHP_EOL, $jsObject);
-        $lineIndex = 0;
         $lineCount = count($lines);
         $newLines = '';
         $addTrailingComma = true;

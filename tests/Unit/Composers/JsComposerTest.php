@@ -40,6 +40,7 @@ class JsComposerTest extends TestCase
         $jsObject = [
             'welcome' => [
                 'testing' => 'path.rename(\'testing issue\', \'welcome to the hood\')',
+                'testing2' => 'path.rename(\'testing issue\', \'welcome to my hood\')',
             ],
             'welcome2' => [
                 'greeting' => 'greets',
@@ -48,7 +49,8 @@ class JsComposerTest extends TestCase
         $assertString = <<<EOD
         {
             welcome: {
-                testing: 'path.rename('testing issue', 'welcome to the hood')'
+                testing: path.rename('testing issue', 'welcome to the hood'),
+                testing2: path.rename('testing issue', 'welcome to my hood'),
             },
             welcome2: {
                 greeting: 'greets'

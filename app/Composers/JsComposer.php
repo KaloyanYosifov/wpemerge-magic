@@ -12,10 +12,47 @@ class JsComposer
         // remove double quotes from object keys and check if the key can remove the double quotes else use single quotes
         $encodedData = preg_replace('~(?<!:)(?<!,)(\s+)(")([\w\$]+)("):~', '$1$3:', $encodedData);
 
-        // remove double quotes from functions
-        $encodedData = preg_replace('~"~', '\'', $encodedData);
+        // loop through all lines
+        // so we find js functions and remove the quotes around them
+        $encodedDataSplittedIntoLines = explode(PHP_EOL, $encodedData);
+        $lineIndex = 0;
+        $encodedData = '';
+
+        foreach ($encodedDataSplittedIntoLines as $line) {
+            if (strpos($line, '(') !== false) {
+                $line = $this->parseFunctionLine($line);
+            }
+
+            // remove double quotes from functions
+            $encodedData .= preg_replace('~"~', '\'', $line);
+
+            // check if we are not on the last line
+            // if that is the case do not append an end line
+            if ($lineIndex + 1 < count($encodedDataSplittedIntoLines)) {
+                $encodedData .= PHP_EOL;
+            }
+
+            $lineIndex++;
+        }
 
         // return
         return $encodedData;
+    }
+
+    protected function parseFunctionLine(string $line): string
+    {
+        $splittedLineByObject = explode(':', $line);
+
+        $objectName = array_shift($splittedLineByObject) . ':';
+
+        // glue the right side and remove the space on the start
+        $gluedRightSide = preg_replace('~^\s~', '', implode(':', $splittedLineByObject));
+
+        // remove double qoutes on end and on begining
+        $gluedRightSide = preg_replace('~^"|",?$~', '', $gluedRightSide);
+        // we glue all things together
+        // and we add comma on the stirng
+        // since we removed it along with the double quotes
+        return $objectName . ' ' . $gluedRightSide . ',';
     }
 }
