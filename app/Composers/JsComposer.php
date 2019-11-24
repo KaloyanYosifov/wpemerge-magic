@@ -7,7 +7,7 @@ class JsComposer
     public function compose(array $jsData): string
     {
         // convert to json
-        $encodedData = json_encode($jsData, JSON_PRETTY_PRINT);
+        $encodedData = json_encode($jsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         // remove double quotes from object keys and check if the key can remove the double quotes else use single quotes
         $encodedData = preg_replace('~(?<!:)(?<!,)(\s+)(")([\w\$]+)("):~', '$1$3:', $encodedData);
@@ -21,6 +21,10 @@ class JsComposer
         foreach ($encodedDataSplittedIntoLines as $line) {
             if (strpos($line, '(') !== false) {
                 $line = $this->parseFunctionLine($line);
+            }
+
+            if (strpos($line, '/') !== false) {
+                $line = $this->parseRegex($line);
             }
 
             // remove double quotes from functions
@@ -54,5 +58,10 @@ class JsComposer
         // and we add comma on the stirng
         // since we removed it along with the double quotes
         return $objectName . ' ' . $gluedRightSide . ',';
+    }
+
+    protected function parseRegex(string $line): string
+    {
+        return preg_replace('~(\'|")\/(.*)\/([\w]*?)(\'|")~', '/$2/$3', $line);
     }
 }
