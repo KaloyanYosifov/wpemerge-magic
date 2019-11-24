@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallVuePackageTask
 {
+    protected $packageManager = 'npm';
+
     /**
      * An array of dependencies to install
      *
@@ -38,6 +40,7 @@ class InstallVuePackageTask
             return;
         }
 
+        $this->checkForYarnSupport();
         $this->assertDependenciesToInstall();
         $this->installDevDependencies();
         $this->installDependencies();
@@ -91,8 +94,8 @@ class InstallVuePackageTask
     public function installDependencies(): void
     {
         $installDependenciesProcess = new Process(array_merge([
-            'npm',
-            'install',
+            $this->packageManager,
+            $this->isUsingYarn() ? 'add' : 'install',
         ], $this->dependencies));
 
         $installDependenciesProcess->setTimeout(600);
@@ -107,9 +110,9 @@ class InstallVuePackageTask
     public function installDevDependencies(): void
     {
         $installDevDependencies = new Process(array_merge([
-            'npm',
-            'install',
-            '--save-dev',
+            $this->packageManager,
+            $this->isUsingYarn() ? 'add' : 'install',
+            $this->isUsingYarn() ? '--dev' : '--save-dev',
         ], $this->devDependencies));
 
         $installDevDependencies->setTimeout(600);
@@ -133,7 +136,7 @@ class InstallVuePackageTask
 
         if (!$doesPackageJsonFileExist) {
             $npmInitProcess = new Process([
-                'npm',
+                $this->packageManager,
                 'init',
                 '-y',
             ]);
@@ -203,5 +206,21 @@ class InstallVuePackageTask
             'webpack-cli',
             'vue-loader',
         ];
+    }
+
+    protected function checkForYarnSupport()
+    {
+        $yarnLockFile = (new CreatePath)->create(Path::getCurrentWorkingDirectory(), [
+            'yarn.lock',
+        ], false);
+
+        if (file_exists($yarnLockFile)) {
+            $this->packageManager = 'yarn';
+        }
+    }
+
+    protected function isUsingYarn(): string
+    {
+        return $this->packageManager === 'yarn';
     }
 }
