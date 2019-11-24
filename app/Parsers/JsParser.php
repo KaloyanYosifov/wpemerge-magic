@@ -13,6 +13,7 @@ class JsParser
         $addTrailingComma = true;
 
         for ($lineIndex = 0; $lineIndex < $lineCount; $lineIndex++) {
+            $addTrailingComma = true;
 
             // if the next line is the last line
             // we try to figure out line count by adding 2, so we compensate for starting from 0
@@ -33,6 +34,7 @@ class JsParser
             // do not add a triling comma
             if (preg_match('~^\s+}~', $nextLine)) {
                 $addTrailingComma = false;
+                $isClosedObject = true;
             }
 
             if (strpos($line, '(') !== false) {
@@ -46,6 +48,10 @@ class JsParser
             // check if we have a trailing comma
             // and if we do remove it
             if ($isNextLineEnd) {
+                $line = preg_replace('~,$~', '', $line);
+            }
+
+            if (!$addTrailingComma) {
                 $line = preg_replace('~,$~', '', $line);
             }
 
