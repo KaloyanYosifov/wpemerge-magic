@@ -22,6 +22,7 @@ class ManageJsContentTest extends TestCase
         }
         EOD;
         $data = (new JsParser())->parse($jsObject);
+
         $data['object2'] = [
             'testing' => 'new_implementation',
             'testing2' => 'it works',

@@ -62,6 +62,6 @@ class JsComposer
 
     protected function parseRegex(string $line): string
     {
-        return preg_replace('~(\'|")\/(.*)\/([\w]*?)(\'|")~', '/$2/$3', $line);
+        return preg_replace('~(\'|")\/(.*)\/([\w]*)(\'|")~', '/$2/$3', $line);
     }
 }

@@ -12,26 +12,34 @@ class JsParser
         $addTrailingComma = true;
 
         for ($lineIndex = 0; $lineIndex < $lineCount; $lineIndex++) {
-            $addTrailingComma = true;
+            $line = preg_replace('~"~', '', $lines[$lineIndex]);
+
+            // get all object keys
+            // and replace them with the same key but without the quotes
+            $line = preg_replace('~(\'|")(.*)(\'|"):~', '$2:', $line);
+
+            if (strpos($line, '/') !== false) {
+                $line = $this->wrapRegex($line);
+            }
 
             // if the next line is the last line
             // we try to figure out line count by adding 2, so we compensate for starting from 0
             // we start from 0 and get the first line
             // but the count starts from 1
             // so if we want to get the next line we have to add 1 surplus due to this difference
-            $line = preg_replace('~"~', '', $lines[$lineIndex]);
             $isNextLineEnd = $lineIndex + 2 === $lineCount;
             $atEndLine = $lineIndex + 2 > $lineCount;
             $nextLine = !$atEndLine ? $lines[$lineIndex + 1] : '';
+            $addTrailingComma = true;
 
-            if (preg_match('~{$~', $line)) {
+            if (preg_match('~\{|\[$~', $line)) {
                 $addTrailingComma = true;
             }
 
             // if after all the space
             // we start with a closed curly bracket
             // do not add a triling comma
-            if (preg_match('~^\s+}~', $nextLine)) {
+            if (preg_match('~^\s+\}|^\s+\]~', $nextLine)) {
                 $addTrailingComma = false;
                 $isClosedObject = true;
             }
@@ -41,6 +49,7 @@ class JsParser
                 continue;
             }
 
+            // replace all single quotes to double quotes
             $line = preg_replace('~\'~', '"', $line);
 
             // if the next line is the last line
@@ -62,6 +71,10 @@ class JsParser
 
     protected function parseFunctionLineInJsObject(string $line, bool $addTrailingComma): string
     {
+        if (strpos($line, ':') === false) {
+            return preg_replace('~(\s+)(.*)\),?~', $addTrailingComma ? '$1"$2)",' : '$1"$2)"', $line) . PHP_EOL;
+        }
+
         $splittedLineByObject = explode(':', $line);
 
         // we are poping the object from the spllited line objects
@@ -89,5 +102,13 @@ class JsParser
         $line = preg_replace('~(?<!:)(?<!,)(\s+)(["\w\$]*):~', '$1"$2":', $line);
 
         return $line;
+    }
+
+    protected function wrapRegex(string $line): string
+    {
+        // wrap regex with qoutes
+        $line = preg_replace('~\s\/(.*)\/([\w]*)(,*)~', '"/$1/$2"$3', $line);
+
+        return preg_replace('~\\\~', '\\\\\\', $line);
     }
 }

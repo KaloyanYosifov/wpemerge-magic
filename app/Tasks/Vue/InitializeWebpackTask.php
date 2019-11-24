@@ -85,9 +85,9 @@ class InitializeWebpackTask
         }
 
         $webpackExportJsObject = (new JsParser())->parse(implode('', $webpackExportsContent));
+
         $webpackExportJsObject = $this->addVueLoaderToObject($webpackExportJsObject);
         $webpackContents[] = 'module.exports = ' . stripslashes((new JsComposer())->compose($webpackExportJsObject)) . ';';
-
         (new Filesystem())
             ->dumpFile($this->webpackPath, implode(PHP_EOL, $webpackContents));
     }
@@ -102,10 +102,16 @@ class InitializeWebpackTask
             $webpackExportJsObject['module']['rules'] = [];
         }
 
+        if (!array_key_exists('rules', $webpackExportJsObject)) {
+            $webpackExportJsObject['plugins'] = [];
+        }
+
         $webpackExportJsObject['module']['rules'][] = [
             'test' => '/\.vue$/',
             'loader' => 'vue-loader',
         ];
+
+        $webpackExportJsObject['plugins'][] = 'new VueLoaderPlugin()';
 
         return $webpackExportJsObject;
     }
