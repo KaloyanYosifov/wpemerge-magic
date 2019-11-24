@@ -45,7 +45,7 @@ class InitializeWebpackTaskTest extends TestCase
         // so that the task doesn't create the default one
         $this->putContentsToTestFile(
             $webpackFilePath,
-            (new StubParser)->parseViaStub('webpack-not-full.mix.js')
+            (new StubParser)->parseViaStub('webpack-not-full.config.js')
         );
 
         $inputMock = $this->mock(InputInterface::class);
@@ -62,6 +62,7 @@ class InitializeWebpackTaskTest extends TestCase
         $this->assertRegExp('~test: \/\\\.vue\$\/,~', $contents);
         $this->assertRegExp('~loader: \'vue-loader\'~', $contents);
         $this->assertRegExp('~new VueLoaderPlugin\(\)~', $contents);
+        $this->assertRegExp('~\'vue$\': \'vue/dist/vue.runtime.esm.js\'~', $contents);
         $this->assertNotRegExp('~new VueLoaderPlugin\(\)\':~', $contents);
     }
 }

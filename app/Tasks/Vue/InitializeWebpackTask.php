@@ -41,7 +41,7 @@ class InitializeWebpackTask
             (new Filesystem())
                 ->dumpFile(
                     $this->webpackPath,
-                    (new StubParser())->parseViaStub('webpack.mix.js')
+                    (new StubParser())->parseViaStub('webpack.config.js')
                 );
 
             $this->initliazeVue = false;
@@ -99,15 +99,19 @@ class InitializeWebpackTask
     protected function addVueLoaderToObject(array $webpackExportJsObject): array
     {
         if (!array_key_exists('module', $webpackExportJsObject)) {
-            $webpackExportJsObject['module'] = [];
+            $webpackExportJsObject['module'] = [
+                'rules' => [],
+            ];
         }
 
-        if (!array_key_exists('rules', $webpackExportJsObject['module'])) {
-            $webpackExportJsObject['module']['rules'] = [];
-        }
-
-        if (!array_key_exists('rules', $webpackExportJsObject)) {
+        if (!array_key_exists('plugins', $webpackExportJsObject)) {
             $webpackExportJsObject['plugins'] = [];
+        }
+
+        if (!array_key_exists('resolve', $webpackExportJsObject)) {
+            $webpackExportJsObject['resolve'] = [
+                'alias' => [],
+            ];
         }
 
         $webpackExportJsObject['module']['rules'][] = [
@@ -116,6 +120,10 @@ class InitializeWebpackTask
         ];
 
         $webpackExportJsObject['plugins'][] = 'new VueLoaderPlugin()';
+
+        $webpackExportJsObject['resolve']['alias'] = [
+            'vue$' => 'vue/dist/vue.runtime.esm.js',
+        ];
 
         return $webpackExportJsObject;
     }

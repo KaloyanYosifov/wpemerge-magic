@@ -10,7 +10,7 @@ class JsComposer
         $encodedData = json_encode($jsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         // remove double quotes from object keys and check if the key can remove the double quotes else use single quotes
-        $encodedData = preg_replace('~(?<!:)(?<!,)(\s+)(")([\w\$]+)("):~', '$1$3:', $encodedData);
+        $encodedData = preg_replace('~(?<!:)(?<!,)(\s+)(")([\w]+)("):~', '$1$3:', $encodedData);
 
         // loop through all lines
         // so we find js functions and remove the quotes around them
@@ -27,7 +27,7 @@ class JsComposer
                 $line = $this->parseRegex($line);
             }
 
-            // remove double quotes from functions
+            // replace double quotes with single ones
             $encodedData .= preg_replace('~"~', '\'', $line);
 
             // check if we are not on the last line

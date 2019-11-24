@@ -118,4 +118,26 @@ class JsComposerTest extends TestCase
 
         $this->assertEquals($jsComposer->compose($jsObject), $assertString);
     }
+
+    /** @test */
+    public function it_doesnt_remove_quotes_from_special_object_keys()
+    {
+        $jsComposer = new JsComposer();
+        $jsObject = [
+            'welcome' => [
+                'test-and-test' => 'path.rename(\'testing issue\', \'welcome to the hood\')',
+                'test$' => 'path.rename(\'testing issue\', \'welcome to my hood\')',
+            ],
+        ];
+        $assertString = <<<EOD
+        {
+            welcome: {
+                'test-and-test': path.rename('testing issue', 'welcome to the hood'),
+                'test$': path.rename('testing issue', 'welcome to my hood'),
+            }
+        }
+        EOD;
+
+        $this->assertEquals($jsComposer->compose($jsObject), $assertString);
+    }
 }
