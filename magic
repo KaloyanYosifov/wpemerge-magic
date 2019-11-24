@@ -1,6 +1,20 @@
 #!/usr/bin/env php
 <?php
 
+// set the time limit
+set_time_limit(600);
+
+// initialize essential wordpress functions
+// due to some libraries
+// applying filters or actions even though wordpress is not initialized
+if (!function_exists('add_filter')) {
+    function add_filter() {}
+}
+
+if (!function_exists('add_action')) {
+    function add_action() {}
+}
+
 // if the file is not run in command
 // just exit
 if (php_sapi_name() !== 'cli') {
