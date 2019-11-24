@@ -46,12 +46,10 @@ class MakeController extends Command
             // if we are on silent mode
             // return early
             if ($input->getOption('silent')) {
-                return;
+                return 0;
             }
 
             throw new RuntimeException('Controller with name "' . $name . '" already exist');
-
-            return;
         }
 
         $type = $this->input->getOption('type') ?: 'web';

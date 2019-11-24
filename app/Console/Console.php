@@ -5,6 +5,12 @@ namespace WPEmergeMagic\Console;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Application;
 
+/**
+ * @method static void activateTestMode()
+ * @method static void register()
+ * @method static void run()
+ * @method static \Symfony\Component\Console\Application getApplication()
+ */
 class Console
 {
     // static
