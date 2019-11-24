@@ -30,6 +30,7 @@ class InstallWPEmergeTask
             'htmlburger/wpemerge',
         ]);
 
+        $installWPEmergeProcess->setTimeout(600);
         $installWPEmergeProcess->run();
 
         // executes after the command finishes
@@ -56,6 +57,7 @@ class InstallWPEmergeTask
                 'init',
             ]);
 
+            $composerInitProcess->setTimeout(600);
             $composerInitProcess->run();
 
             // executes after the command finishes

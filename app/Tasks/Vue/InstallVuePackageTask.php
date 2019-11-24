@@ -95,6 +95,7 @@ class InstallVuePackageTask
             'install',
         ], $this->dependencies));
 
+        $installDependenciesProcess->setTimeout(600);
         $installDependenciesProcess->run();
 
         // executes after the command finishes
@@ -111,6 +112,7 @@ class InstallVuePackageTask
             '--save-dev',
         ], $this->devDependencies));
 
+        $installDevDependencies->setTimeout(600);
         $installDevDependencies->run();
 
         // executes after the command finishes
