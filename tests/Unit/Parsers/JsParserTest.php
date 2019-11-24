@@ -89,4 +89,22 @@ class JsParserTest extends TestCase
         $this->assertArrayHasKey('object1', $data);
         $this->assertArrayHasKey('welcome', $data['object1']);
     }
+
+    /** @test */
+    public function it_replaces_double_quotes_with_single_quotes_so_we_can_parse()
+    {
+        $jsObject = <<<'EOD'
+        {
+            object1: {
+                "welcome": 'test'
+            },
+        }
+        EOD;
+
+        $data = (new JsParser())->parse($jsObject);
+
+        $this->assertNotNull($data);
+        $this->assertArrayHasKey('object1', $data);
+        $this->assertArrayHasKey('welcome', $data['object1']);
+    }
 }

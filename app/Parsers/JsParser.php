@@ -20,7 +20,7 @@ class JsParser
             // we start from 0 and get the first line
             // but the count starts from 1
             // so if we want to get the next line we have to add 1 surplus due to this difference
-            $line = $lines[$lineIndex];
+            $line = preg_replace('~"~', '', $lines[$lineIndex]);
             $isNextLineEnd = $lineIndex + 2 === $lineCount;
             $atEndLine = $lineIndex + 2 > $lineCount;
             $nextLine = !$atEndLine ? $lines[$lineIndex + 1] : '';
