@@ -2,10 +2,13 @@
 
 namespace WPEmergeMagic\Tasks\WPEmerge;
 
+use WPEmergeMagic\Support\App;
 use WPEmergeMagic\Support\Path;
 use WPEmergeMagic\Support\CreatePath;
+use Symfony\Component\Process\Process;
 use WPEmergeMagic\Constants\AppConstants;
 use Symfony\Component\Console\Command\Command;
+use WPEmergeMagic\Exceptions\TaskFailedException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -39,6 +42,23 @@ class AddAutoloadTask
             $composerJsonFilePath,
             json_encode($composerData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
+
+        if (App::isOnTestMode()) {
+            return;
+        }
+
+        // dump composer autoload
+        // so we can reflect the changes
+        $autoloadProcess = new Process([
+            'composer',
+            'dump-autoload',
+        ]);
+
+        $autoloadProcess->run();
+
+        if (!$autoloadProcess->isSuccessful()) {
+            throw new TaskFailedException('Couldn\'t dump autoload!');
+        }
     }
 
     protected function hasAppAutoloadBeenDefined(array $composerData, InputInterface $input): bool
