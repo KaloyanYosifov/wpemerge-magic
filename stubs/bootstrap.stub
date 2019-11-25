@@ -22,7 +22,6 @@ add_action( 'after_setup_theme', function() {
         ],
         'views' => [
             __DIR__ . '/views',
-            __DIR__ . '/layouts',
         ],
     ] );
 } );
