@@ -60,7 +60,7 @@ class CreateBootstrapTask
                 $addedBootstrapRequire = true;
             }
 
-            $fileLines .= $fileLine . PHP_EOL;
+            $fileLines .= $fileLine;
         }
 
         (new Filesystem)->dumpFile(
