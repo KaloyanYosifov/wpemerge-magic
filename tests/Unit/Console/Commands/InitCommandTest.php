@@ -3,21 +3,17 @@
 namespace Tests\Unit\Console\Commands;
 
 use Tests\CommandTestCase;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class InitCommandTest extends CommandTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        // create functions.php
-        //every time
-        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
-    }
-
     /** @test */
     public function it_creates_an_app_folder()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
         $this->assertTestFileExists(['app']);
     }
@@ -25,6 +21,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_routes()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $routesPath = [
@@ -41,6 +41,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_controllers()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $controllersPath = [
@@ -57,6 +61,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_views_and_layouts()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $viewsPath = [
@@ -73,6 +81,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_a_bootstrap_file()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $this->assertTestFileExists([
@@ -84,6 +96,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_creates_a_composer_with_htmlburger_library_required()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $composerPath = ['composer.json'];
@@ -99,6 +115,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_has_autoload()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init');
 
         $composerPath = ['composer.json'];
@@ -110,6 +130,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_can_initialize_with_namespace()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init', [
             '--namespace' => 'TestNamespace',
         ]);
@@ -123,6 +147,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_can_initialize_with_a_different_folder()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init', [
             '--dir' => 'testing-dir',
         ]);
@@ -132,6 +160,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_adds_namespace_to_controllers()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $this->runCommand('init', [
             '--namespace' => 'TestingerNamespace',
         ]);
@@ -156,8 +188,23 @@ class InitCommandTest extends CommandTestCase
     }
 
     /** @test */
+    public function it_throws_an_error_if_it_cannot_find_functions_php()
+    {
+        try {
+            $this->runCommand('init');
+            $this->fail('An exception should have been thrown.');
+        } catch (FileNotFoundException $e) {
+            $this->assertTrue(true);
+        }
+    }
+
+    /** @test */
     public function it_requires_bootstrap_file_in_functions_php()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. app \. DIRECTORY_SEPARATOR \. bootstrap.php';
 
         $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
@@ -168,6 +215,10 @@ class InitCommandTest extends CommandTestCase
     /** @test */
     public function it_requires_bootstrap_file_in_functions_php_with_different_directory()
     {
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+
         $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. something \. DIRECTORY_SEPARATOR \. bootstrap.php';
 
         $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
