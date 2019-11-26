@@ -15,9 +15,12 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class CreateBootstrapTask
 {
+    protected $appDirectory = '';
+
     public function handle(InputInterface $input, OutputInterface $output, Command $command)
     {
         $this->appDirectory = preg_replace('~\/~', '', $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY);
+
         $bootstrapFile = (new CreatePath)
             ->create(Path::getCurrentWorkingDirectory(), [
                 $this->appDirectory,
