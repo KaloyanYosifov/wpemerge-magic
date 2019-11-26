@@ -71,6 +71,6 @@ class CreateBootstrapTask
 
     protected function addBootstrapRequire(): string
     {
-        return PHP_EOL . 'require_once __DIR__ . DIRECTORY_SEPARATOR . ' . $this->appDirectory . ' . DIRECTORY_SEPARATOR . bootstrap.php;';
+        return PHP_EOL . 'require_once __DIR__ . DIRECTORY_SEPARATOR . \'' . $this->appDirectory . '\' . DIRECTORY_SEPARATOR . \'bootstrap.php\';';
     }
 }

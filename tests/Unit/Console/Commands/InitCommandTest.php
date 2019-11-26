@@ -205,7 +205,7 @@ class InitCommandTest extends CommandTestCase
         //every time
         file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
 
-        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. app \. DIRECTORY_SEPARATOR \. bootstrap.php;';
+        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. \'app\' \. DIRECTORY_SEPARATOR \. \'bootstrap.php\';';
 
         $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
         $this->runCommand('init');
@@ -219,7 +219,7 @@ class InitCommandTest extends CommandTestCase
         //every time
         file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
 
-        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. something \. DIRECTORY_SEPARATOR \. bootstrap.php;';
+        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. \'something\' \. DIRECTORY_SEPARATOR \. \'bootstrap.php\';';
 
         $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
         $this->runCommand('init', [
