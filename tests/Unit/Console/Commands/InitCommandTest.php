@@ -6,6 +6,15 @@ use Tests\CommandTestCase;
 
 class InitCommandTest extends CommandTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // create functions.php
+        //every time
+        file_put_contents($this->getTestFilePath(['functions.php']), '<?php');
+    }
+
     /** @test */
     public function it_creates_an_app_folder()
     {
@@ -144,6 +153,28 @@ class InitCommandTest extends CommandTestCase
             'TestingerNamespace\\Controllers\\Ajax',
             file_get_contents($this->getTestFilePath(array_merge($controllersPath, ['Ajax', 'AjaxController.php'])))
         );
+    }
+
+    /** @test */
+    public function it_requires_bootstrap_file_in_functions_php()
+    {
+        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. app \. DIRECTORY_SEPARATOR \. bootstrap.php';
+
+        $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
+        $this->runCommand('init');
+        $this->assertRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
+    }
+
+    /** @test */
+    public function it_requires_bootstrap_file_in_functions_php_with_different_directory()
+    {
+        $requireBootstrapFileString = 'require_once __DIR__ \. DIRECTORY_SEPARATOR \. something \. DIRECTORY_SEPARATOR \. bootstrap.php';
+
+        $this->assertNotRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
+        $this->runCommand('init', [
+            '--dir' => 'something',
+        ]);
+        $this->assertRegExp('~' . $requireBootstrapFileString . '~', $this->getTestFilePathContents(['functions.php']));
     }
 
     protected function assertContentMatch(string $regex, string $content): void
