@@ -124,7 +124,7 @@ class InitCommandTest extends CommandTestCase
         $composerPath = ['composer.json'];
 
         $this->assertTestFileExists($composerPath);
-        $this->assertAutoload('App\\\\', $this->getComposerData($composerPath));
+        $this->assertAutoload('App\\', $this->getComposerData($composerPath));
     }
 
     /** @test */
@@ -141,7 +141,7 @@ class InitCommandTest extends CommandTestCase
         $composerPath = ['composer.json'];
 
         $this->assertTestFileExists($composerPath);
-        $this->assertAutoload('TestNamespace\\\\', $this->getComposerData($composerPath));
+        $this->assertAutoload('TestNamespace\\', $this->getComposerData($composerPath));
     }
 
     /** @test */

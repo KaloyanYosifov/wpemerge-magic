@@ -74,7 +74,7 @@ class AddAutoloadTask
         $psr4Autoloads = $composerData['autoload']['psr-4'];
 
         foreach ($psr4Autoloads as $psr4AutoloadNamespace => $psr4AutoloadFolder) {
-            $regex = '~' . ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\\~';
+            $regex = '~' . ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\\\~';
 
             // if the namespace App is defined
             // return true
@@ -97,7 +97,7 @@ class AddAutoloadTask
         }
 
         $dir = $input->getOption('dir') ?: AppConstants::DEFAULT_APP_DIRECTORY;
-        $namespace = ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\\\';
+        $namespace = ($input->getOption('namespace') ?: AppConstants::DEFAULT_APP_NAMESPACE) . '\\';
         $composerData['autoload']['psr-4'][$namespace] = $dir . '/';
 
         return $composerData;
